@@ -1,10 +1,10 @@
 ---
 
-# Django Attendance and Announcement Management System
+# Django Attendance and Announcement Management System📃
 
 This Django application provides an attendance management system with user and admin functionalities. It includes features for user registration, login, OTP verification, attendance tracking, announcement management, and more.
 
-## Features
+## Features⚡
 
 - **User Registration & Login:** Users can register and log in using a secure system with hashed passwords.
 - **OTP Verification:** Users are required to verify their identity via a One-Time Password (OTP) sent to their email.
@@ -14,7 +14,7 @@ This Django application provides an attendance management system with user and a
 - **Data Export:** Admins can export attendance data to Excel format for record-keeping.
 - **Announcements:** Admins can create and manage announcements visible to users.
 
-## Requirements
+## Requirements👌
 
 - Python 3.x
 - Django
@@ -24,7 +24,7 @@ This Django application provides an attendance management system with user and a
 - Pandas
 - Openpyxl
 
-## Setup
+## Setup🚀
 
 1. **Clone the Repository**
 
