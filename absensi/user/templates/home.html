@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxCo - Redefining Elegance</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* GLOBAL STYLING */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Modern and Luxurious Color Palette */
+        :root {
+            --primary-color: #1a1a1d;
+            --accent-color: #ff9f43;
+            --light-bg: #f8f9fa;
+            --dark-bg: #1c1c1e;
+            --white: #ffffff;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .navbar-toggler {
+            color: var(--accent-color);
+        }
+
+        .nav-link {
+            color: var(--white) !important;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 0.05rem;
+            color: var(--accent-color);
+            animation: fadeInDown 1.2s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1rem auto;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .hero .btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            background-color: var(--accent-color);
+            color: var(--dark-bg);
+            border-radius: 50px;
+            transition: all 0.3s;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero .btn:hover {
+            background-color: #feca57;
+        }
+
+        /* ABOUT SECTION */
+        #about {
+            padding: 5rem 0;
+            background-color: var(--light-bg);
+            color: #333;
+            text-align: center;
+        }
+
+        #about img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        /* SERVICES SECTION */
+        #services {
+            background-color: var(--dark-bg);
+            padding: 5rem 0;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .service-card {
+            background-color: #333;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: transform 0.3s ease-out;
+            margin-bottom: 2rem;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background-color: var(--primary-color);
+        }
+
+        /* TEAM SECTION */
+        #team {
+            background-color: var(--light-bg);
+            padding: 5rem 0;
+            text-align: center;
+            color: #333;
+        }
+
+        .team-member {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* CONTACT SECTION */
+        #contact {
+            padding: 5rem 0;
+            background-color: var(--dark-bg);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .contact-form button {
+            padding: 12px 30px;
+            background-color: var(--accent-color);
+            color: var(--dark-bg);
+            border-radius: 50px;
+            transition: background-color 0.3s ease-out;
+        }
+
+        .contact-form button:hover {
+            background-color: #feca57;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--primary-color);
+            padding: 2rem 0;
+            color: var(--white);
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .nav-link {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">LuxCo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Elevate Your Brand to New Heights</h1>
+        <p>LuxCo is a premier consulting firm offering cutting-edge solutions for businesses worldwide.</p>
+        <a href="#contact" class="btn">Get Started</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="text-center">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>At LuxCo, we strive to provide tailored business solutions that help companies grow, innovate, and thrive in today's fast-paced environment. With a focus on quality and customer satisfaction, we ensure our clients achieve excellence in all endeavors.</p>
+            <img src="https://via.placeholder.com/1200x800" alt="About LuxCo">
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="text-center">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <i class="fas fa-chart-line fa-3x"></i>
+                        <h4>Business Strategy</h4>
+                        <p>Crafting bespoke strategies to guide businesses toward success in today's competitive market.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <i class="fas fa-bullhorn fa-3x"></i>
+                        <h4>Brand Development</h4>
+                        <p>Establishing a powerful brand presence that resonates with your audience and boosts growth.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <i class="fas fa-lightbulb fa-3x"></i>
+                        <h4>Innovation Consulting</h4>
+                        <p>Discovering cutting-edge solutions to stand out and maintain relevance in your industry.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h4>John Doe</h4>
+                        <p>CEO - With over 20 years of experience in global markets, John leads LuxCo with a vision for excellence.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h4>Jane Smith</h4>
+                        <p>CMO - A marketing visionary with a proven track record of transforming brands and driving growth.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h4>Mike Johnson</h4>
+                        <p>CTO - Innovating with cutting-edge technology to develop solutions that push the boundaries of business.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <form class="contact-form">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-control" placeholder="Your Name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="email" class="form-control" placeholder="Your Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 LuxCo. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

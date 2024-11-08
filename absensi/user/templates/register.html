@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        :root {
+            --primary-color: #1a1a1d;
+            --accent-color: #ff9f43;
+            --light-bg: #f8f9fa;
+            --dark-bg: #1c1c1e;
+            --white: #ffffff;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 700px; /* Wider for desktop */
+            animation: fadeIn 1s ease-out;
+        }
+
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #ff5e62;
+            color: #fff;
+            box-shadow: none;
+        }
+
+        .btn-register {
+            background-color: #C2D9FF;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background-color: #818FB4;
+        }
+
+        .footer-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        .footer-link a {
+            color: #C2D9FF;
+            text-decoration: underline;
+        }
+
+        .footer-link a:hover {
+            color: #ff9f43;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .register-container {
+                padding: 1.5rem;
+                width: 90%; /* Make it narrower for mobile */
+                max-width: 350px; /* Smaller max-width for mobile */
+            }
+
+            .register-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn-register {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Registration Form -->
+    <div class="register-container">
+        <h2>Create Your Account</h2>
+        <form method="post" class="p-2">
+            {% csrf_token %}
+
+            <!-- First Name Input -->
+            <div class="mb-3">
+                <label for="id_first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="id_first_name" name="first_name" required placeholder="Enter your first name">
+            </div>
+
+            <!-- Last Name Input -->
+            <div class="mb-3">
+                <label for="id_last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="id_last_name" name="last_name" required placeholder="Enter your last name">
+            </div>
+
+            <!-- Email Input -->
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="id_email" name="email" required placeholder="Enter your email">
+            </div>
+
+            <!-- Username Input -->
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="id_username" name="username" required placeholder="Choose a username">
+            </div>
+
+            <!-- Password Input -->
+            <div class="mb-3 position-relative">
+                <label for="id_password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="id_password" name="password" required placeholder="Choose a password">
+                <i class="fas fa-eye show-password" id="togglePassword" style="cursor: pointer; position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #fff;"></i>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-register w-100">Register</button>
+        </form>
+
+        <div class="footer-link">
+            <p>Already have an account? <a href="/login">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- JS for Password Toggle -->
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordField = document.querySelector('#id_password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

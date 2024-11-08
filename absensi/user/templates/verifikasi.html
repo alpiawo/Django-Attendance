@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi OTP</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: white;
+        }
+        .otp-input {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            /*margin-bottom: 10px;*/
+        }
+        .otp-box {
+            width: 50px; /* Lebar kotak input */
+            height: 50px; /* Tinggi kotak input */
+            border: 1px solid black; /* Border kotak input */
+            margin: 2px;
+            border-radius: 5px; /* Sudut kotak input */
+            text-align: center;
+            font-size: 24px; /* Ukuran font */
+            background-color: #aaaaaa; /* Latar belakang transparan */
+            color: #1a1a1d; /* Warna teks */
+        }
+
+        .OTP {
+            border-radius: 10px;
+        }
+
+        .body-OTP {
+            width: 30rem;
+            height: 20rem;
+            border: none;
+            border-radius: 30px;
+            padding: 40px;
+        }
+
+        .head-OTP {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            padding: 30px;
+            border-radius: 10px 10px 0 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
+        <h3>Akd-Tech Members</h3>
+        <div class="OTP shadow-lg">
+            <div class="head-OTP">
+                <h3 class="text-center text-light">Verification Code <i class="fas fa-user-lock"></i></h3>
+            </div>
+            <div class="body-OTP">
+<!--        <h2 class="mb-4 bg-light text-dark text-center">Masukkan Kode OTP</h2>-->
+
+        {% if error %}
+        <div class="alert alert-danger" role="alert" id="error-alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST" class="text-center">
+            {% csrf_token %}
+            <div class="otp-input mb-4">
+                <input type="text" name="otp1" class="otp-box" maxlength="1" required>
+                <input type="text" name="otp2" class="otp-box" maxlength="1" required>
+                <input type="text" name="otp3" class="otp-box" maxlength="1" required>
+                <input type="text" name="otp4" class="otp-box" maxlength="1" required>
+                <input type="text" name="otp5" class="otp-box" maxlength="1" required>
+                <input type="text" name="otp6" class="otp-box" maxlength="1" required>
+            </div>
+            <button type="submit" class="btn btn-info">Verifikasi</button>
+        </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.11/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Jika ada pesan error, hilangkan setelah 4 detik
+        window.onload = function() {
+            const alert = document.getElementById('error-alert');
+            if (alert) {
+                setTimeout(() => {
+                    alert.classList.add('fade'); // Tambahkan kelas fade untuk efek smooth
+                    alert.style.opacity = '0'; // Atur opasitas menjadi 0
+                }, 4000); // Tunggu selama 4 detik
+            }
+        }
+    </script>
+</body>
+</html>

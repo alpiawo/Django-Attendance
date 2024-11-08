@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        min-height: 100vh;
+        background: #f3f4f6;
+      }
+
+      @media (max-width: 600px) {
+         body
+         {
+           /*margin: 0rem;*/
+         }
+       }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 70px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: #1e293b;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        z-index: 1;
+      }
+      nav .logo {
+        display: flex;
+        align-items: center;
+        margin: 0 24px;
+      }
+      .logo .menu-icon {
+        color: #fff;
+        font-size: 24px;
+        margin-right: 14px;
+        cursor: pointer;
+      }
+      .logo .logo-name {
+        color: #fff;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      nav .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 260px;
+        padding: 20px 0;
+        background-color: #1e293b;
+        transition: all 0.4s ease;
+        z-index: 2;
+        color: #fff;
+      }
+      nav.open .sidebar {
+        left: 0;
+      }
+      .sidebar .sidebar-content {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 30px 16px;
+      }
+      .sidebar-content .list {
+        list-style: none;
+      }
+      .list .nav-link {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        padding: 14px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #94a3b8;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .lists .nav-link:hover {
+        background-color: #0ea5e9;
+        color: #fff;
+      }
+      .nav-link .icon {
+        margin-right: 14px;
+        font-size: 20px;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 200%;
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+        transition: all 0.4s ease;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      nav.open ~ .overlay {
+        opacity: 1;
+        left: 260px;
+        pointer-events: auto;
+      }
+
+      .container {
+        margin: 1rem;
+
+        justify-content: center;
+      }
+
+      .card-grid {
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 3rem auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+        gap: 2rem;
+        padding: 1rem;
+        max-width: 1200px;
+        }
+
+        .card {
+            margin-top: 5rem;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Efek naik saat hover */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Lebih besar shadow saat hover */
+        }
+
+        .card h5 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .card p {
+            margin: 0.5rem 0;
+            color: #7f8c8d;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .card-icon {
+            font-size: 5rem;
+            color: #0ea5e9;
+            margin-left: 1.5rem;
+        }
+
+        .user-table {
+            margin-top: 3rem;
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            margin-top: 1rem;
+            min-width: 600px;
+            border-radius: 14px;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 0;
+        }
+        th {
+            background-color: #0ea5e9;
+            color: white;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #e2e8f0;
+        }
+        @media (max-width: 768px) {
+            .user-table {
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 278px) {
+
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .badge-karyawan {
+            background-color: #38a169;
+        }
+
+        .badge-unknow {
+            background-color: #feca57;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+      <div class="logo">
+        <i class="bx bx-menu menu-icon"></i>
+        <span class="logo-name">Akd-Tech</span>
+      </div>
+      <div class="sidebar">
+        <div class="logo">
+          <i class="bx bx-menu menu-icon"></i>
+          <span class="logo-name">Akd-Tech</span>
+        </div>
+        <div class="sidebar-content">
+          <ul class="lists">
+            <li class="list">
+              <a href="{% url 'user:admin_home' %}" class="nav-link">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="link">Dashboard</span>
+              </a>
+            </li>
+              <li class="list">
+              <a href="{% url 'user:admin_attendance_check' %}" class="nav-link">
+                <i class="bx bx-list-check icon"></i>
+                <span class="link">Check Attendance</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'user:announcement_view' %}" class="nav-link">
+                <i class="bx bx-bell icon"></i>
+                <span class="link">Announcement</span>
+              </a>
+            </li>
+          </ul>
+          <div class="bottom-content">
+            <li class="list">
+              <a href="{% url 'user:admin_profile' %}" class="nav-link">
+                <i class="bx bx-user-circle icon"></i>
+                <span class="link">Profile</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'user:logout' %}" class="nav-link">
+                <i class="bx bx-log-out icon"></i>
+                <span class="link">Logout</span>
+              </a>
+            </li>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="overlay"></section>
+    <div class="container">
+    <div class="card-grid">
+        <!-- Total Karyawan -->
+        <div class="card">
+            <div class="card-body">
+                <h5>Total Employees (Karyawan)</h5>
+                <p>{{ total_karyawan }}</p>
+            </div>
+            <i class="bx bx-user card-icon"></i>
+        </div>
+
+        <!-- Present Count -->
+        <div class="card">
+            <div class="card-body">
+                <h5>Total Present</h5>
+                <p>{{ present_count }}</p>
+            </div>
+            <i class="bx bx-check-circle card-icon"></i>
+        </div>
+
+        <!-- Izin Count -->
+        <div class="card">
+            <div class="card-body">
+                <h5>Total Late Leaves (Izin)</h5>
+                <p>{{ izin_count }}</p>
+            </div>
+            <i class="bx bx-time card-icon"></i>
+        </div>
+
+        <!-- Alpha Count -->
+        <div class="card">
+            <div class="card-body">
+                <h5>Total Absents (Alpha)</h5>
+                <p>{{ alpha_count }}</p>
+            </div>
+            <i class="bx bx-x-circle card-icon"></i>
+        </div>
+    </div>
+
+    <div class="user-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Sebagai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in karyawan_users %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td class="pins">
+                        {% if user.role == 'Karyawan' %}
+                        <span class="badge badge-karyawan">Karyawan</span>
+                        {% else %}
+                        <span class="badge badge-unknow">Unknown</span>
+                        {% endif %}
+                        </td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No users found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script>
+        const navBar = document.querySelector("nav"),
+        menuBtns = document.querySelectorAll(".menu-icon"),
+        overlay = document.querySelector(".overlay");
+
+      menuBtns.forEach((menuBtn) => {
+        menuBtn.addEventListener("click", () => {
+          navBar.classList.toggle("open");
+        });
+      });
+
+      overlay.addEventListener("click", () => {
+        navBar.classList.remove("open");
+      });
+    </script>
+</body>
+</html>

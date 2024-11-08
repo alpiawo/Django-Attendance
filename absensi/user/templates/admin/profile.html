@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
+    <title>Profile UI - Modernized</title>
+    <style>
+      /* Google Fonts - Poppins */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        min-height: 100vh;
+        background: #f3f4f6;
+      }
+
+      @media (max-width: 600px) {
+         body
+         {
+           margin: 2rem;
+         }
+       }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 70px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: #1e293b;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        z-index: 1;
+      }
+      nav .logo {
+        display: flex;
+        align-items: center;
+        margin: 0 24px;
+      }
+      .logo .menu-icon {
+        color: #fff;
+        font-size: 24px;
+        margin-right: 14px;
+        cursor: pointer;
+      }
+      .logo .logo-name {
+        color: #fff;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      nav .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 260px;
+        padding: 20px 0;
+        background-color: #1e293b;
+        transition: all 0.4s ease;
+        z-index: 2;
+        color: #fff;
+      }
+      nav.open .sidebar {
+        left: 0;
+      }
+      .sidebar .sidebar-content {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 30px 16px;
+      }
+      .sidebar-content .list {
+        list-style: none;
+      }
+      .list .nav-link {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        padding: 14px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #94a3b8;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .lists .nav-link:hover {
+        background-color: #0ea5e9;
+        color: #fff;
+      }
+      .nav-link .icon {
+        margin-right: 14px;
+        font-size: 20px;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 200%;
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+        transition: all 0.4s ease;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      nav.open ~ .overlay {
+        opacity: 1;
+        left: 260px;
+        pointer-events: auto;
+      }
+
+      .container {
+        margin-top: 7rem;
+        margin-left: 5rem;
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 600px) {
+         #calendar,
+         .container
+         {
+           margin-left: 0px;
+         }
+       }
+
+      .left-column {
+        width: 60%;
+      }
+
+      .right-column {
+        width: 35%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .pict img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .profile-section {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      .profile-section h1 {
+        font-size: 2rem;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+
+      .profile-section h3 {
+        font-size: 1.2rem;
+        color: #64748b;
+        margin-bottom: 1rem;
+      }
+
+      .text span {
+        font-size: 1.5rem;
+        color: #475569;
+      }
+
+      .recent-absensi {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .recent-absensi h3 {
+        color: #1e293b;
+        margin-bottom: 1rem;
+      }
+
+      .absensi-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .absensi-list li {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: #64748b;
+      }
+
+      .calendar-section {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .calendar-section h3 {
+        color: #1e293b;
+        margin-bottom: 1rem;
+      }
+
+      #calendar {
+        max-width: 100%;
+        height: 350px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .left-column,
+        .right-column {
+          width: 100%;
+        }
+
+        #calendar {
+          height: 400px;
+        }
+      }
+    </style>
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <i class="bx bx-menu menu-icon"></i>
+        <span class="logo-name">Akd-Tech</span>
+      </div>
+      <div class="sidebar">
+        <div class="logo">
+          <i class="bx bx-menu menu-icon"></i>
+          <span class="logo-name">Akd-Tech</span>
+        </div>
+        <div class="sidebar-content">
+          <ul class="lists">
+            <li class="list">
+              <a href="{% url 'user:admin_home' %}" class="nav-link">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="link">Dashboard</span>
+              </a>
+            </li>
+              <li class="list">
+              <a href="{% url 'user:admin_attendance_check' %}" class="nav-link">
+                <i class="bx bx-list-check icon"></i>
+                <span class="link">Check Attendance</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'user:announcement_view' %}" class="nav-link">
+                <i class="bx bx-bell icon"></i>
+                <span class="link">Announcement</span>
+              </a>
+            </li>
+          </ul>
+          <div class="bottom-content">
+            <li class="list">
+              <a href="{% url 'user:admin_profile' %}" class="nav-link">
+                <i class="bx bx-user-circle icon"></i>
+                <span class="link">Profile</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'user:logout' %}" class="nav-link">
+                <i class="bx bx-log-out icon"></i>
+                <span class="link">Logout</span>
+              </a>
+            </li>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="overlay"></section>
+    <div class="container">
+      <!-- Profile Section (Left) -->
+      <div class="left-column">
+        <div class="profile-section">
+          <div class="pict">
+            <img src="https://www.thispersondoesnotexist.com/" alt="User Profile" />
+          </div>
+          <div class="text">
+            <h1>{{ user.username }}</h1>
+            <span>Name:</span>
+            <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            <span>Email:</span>
+            <h3>{{ user.email }}</h3>
+            <span>Joined:</span>
+            <h3>{{ user.date_joined|date:"d-m-Y" }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Absensi dan Kalender Section (Right) -->
+      <div class="right-column">
+        <!-- Calendar Section -->
+        <div class="calendar-section">
+          <h3>Schedule & Calendar</h3>
+          <div id="calendar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JQuery dan FullCalendar JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'id',
+                events: function(fetchInfo, successCallback, failureCallback) {
+                    const allEvents = [];
+                }
+            });
+
+            calendar.render();
+        });
+
+      const navBar = document.querySelector("nav"),
+        menuBtns = document.querySelectorAll(".menu-icon"),
+        overlay = document.querySelector(".overlay");
+
+      menuBtns.forEach((menuBtn) => {
+        menuBtn.addEventListener("click", () => {
+          navBar.classList.toggle("open");
+        });
+      });
+
+      overlay.addEventListener("click", () => {
+        navBar.classList.remove("open");
+      });
+    </script>
+  </body>
+</html>

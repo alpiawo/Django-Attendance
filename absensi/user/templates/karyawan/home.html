@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <title>Sidebar Menu | Side Navigation Bar</title>
+    <!-- CSS -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        min-height: 100%;
+        background: #e3f2fd;
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 70px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: #1e293b;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        z-index: 1;
+      }
+      nav .logo {
+        display: flex;
+        align-items: center;
+        margin: 0 24px;
+      }
+      .logo .menu-icon {
+        color: #fff;
+        font-size: 24px;
+        margin-right: 14px;
+        cursor: pointer;
+      }
+      .logo .logo-name {
+        color: #fff;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      nav .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 260px;
+        padding: 20px 0;
+        background-color: #1e293b;
+        transition: all 0.4s ease;
+        z-index: 2;
+        color: #fff;
+      }
+      nav.open .sidebar {
+        left: 0;
+      }
+      .sidebar .sidebar-content {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 30px 16px;
+      }
+      .sidebar-content .list {
+        list-style: none;
+      }
+      .list .nav-link {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        padding: 14px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #94a3b8;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .lists .nav-link:hover {
+        background-color: #0ea5e9;
+        color: #fff;
+      }
+      .nav-link .icon {
+        margin-right: 14px;
+        font-size: 20px;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 200%;
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+        transition: all 0.4s ease;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      nav.open ~ .overlay {
+        opacity: 1;
+        left: 260px;
+        pointer-events: auto;
+      }
+      .container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 3.5rem;
+        margin-top: 8rem;
+      }
+      .top-card {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        width: 30%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+      }
+      .top-card:hover {
+        transform: translateY(-5px);
+      }
+      .top-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      .list-content {
+        display: flex;
+        justify-content: space-between; /* Space between text and icon */
+        align-items: center; /* Center vertically */
+      }
+      .list-content h1 {
+        margin-bottom: 2rem;
+        margin-right: 1rem; /* Space between the number and icon */
+      }
+      .list-content i {
+        font-size: 5rem; /* Adjust size as needed */
+        max-width: 100%; /* Ensure it doesn't overflow */
+        height: auto; /* Maintain aspect ratio */
+        flex-shrink: 0; /* Prevent shrinking */
+      }
+
+      /* New styles for the announcement card */
+      .announcement-card {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        width: 55%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        margin-top: 3rem;
+      }
+      .announcement-card:hover {
+        transform: translateY(-5px);
+      }
+      .announcement-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      .announcement {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      @media (max-width: 900px) {
+        .top-card,
+        .announcement-card {
+          width: 45%;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .top-card,
+        .announcement-card {
+          width: 100%;
+        }
+      }
+
+      #calendar {
+        z-index: 0;
+        margin-top: 3rem;
+        width: 40%; /* Make the calendar take most of the space */
+      }
+
+       @media (max-width: 600px) {
+         #calendar
+         {
+           width: 100%;
+         }
+       }
+
+      @media (max-width: 600px) {
+         .fc .fc-toolbar-title
+         {
+           width: 1rem;
+         }
+       }
+
+      .fc .fc-toolbar-title {
+        margin-right: 5rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .fc {
+        padding: 1.5rem;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+      }
+    </style>
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <i class="bx bx-menu menu-icon"></i>
+        <span class="logo-name">Akd-Tech</span>
+      </div>
+      <div class="sidebar">
+        <div class="logo">
+          <i class="bx bx-menu menu-icon"></i>
+          <span class="logo-name">Akd-Tech</span>
+        </div>
+        <div class="sidebar-content">
+          <ul class="lists">
+            <li class="list">
+              <a href="{% url 'user:karyawan_home' %}" class="nav-link">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="link">Dashboard</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'kehadiran:check_in' %}" class="nav-link">
+                <i class="bx bx-calendar-check icon"></i>
+                <span class="link">Attendance</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'kehadiran:announcement_karyawan' %}" class="nav-link">
+                <i class="bx bx-bell icon"></i>
+                <span class="link">Announcement</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'kehadiran:attendance_summary' %}" class="nav-link">
+                <i class="bx bx-history icon"></i>
+                <span class="link">History Summary</span>
+              </a>
+            </li>
+          </ul>
+          <div class="bottom-content">
+            <li class="list">
+              <a href="{% url 'user:karyawan_profile' %}" class="nav-link">
+                <i class="bx bx-user-circle icon"></i>
+                <span class="link">Profile</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'user:logout' %}" class="nav-link">
+                <i class="bx bx-log-out icon"></i>
+                <span class="link">Logout</span>
+              </a>
+            </li>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="overlay"></section>
+    <div class="container">
+      <div class="top-card">
+        <div class="list-content">
+          <h1>{{ total_telat }}</h1>
+          <i class="bx bx-user-minus icon"></i>
+        </div>
+        <h3>Total telat</h3>
+      </div>
+
+      <div class="top-card">
+        <div class="list-content">
+          <h1>{{ total_tidak_telat }}</h1>
+          <i class="bx bx-user-check icon"></i>
+        </div>
+        <h3>Total tidak telat</h3>
+      </div>
+
+      <div class="top-card">
+        <div class="list-content">
+          <h1>{{ total_alpha }}</h1>
+          <i class="bx bx-user-x icon"></i>
+        </div>
+        <h3>Total alpha</h3>
+      </div>
+
+      <div id="calendar"></div>
+
+      <!-- New Announcement Card -->
+      <div class="announcement-card">
+        <h3>Announcements</h3>
+        {% for announcement in announcements|slice:":3" %}
+        <div class="announcement">
+          <strong>{{ announcement.title }}:</strong> {{ announcement.content }}
+        </div>
+        {% empty %}
+        <p>No announcements at this time.</p>
+        {% endfor %}
+      </div>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'id',
+                events: function(fetchInfo, successCallback, failureCallback) {
+                    const allEvents = [];
+
+                    Promise.all([
+                        fetch('/get_user_tidak_telat/').then(response => response.json()),
+                        fetch('/get_user_telat/').then(response => response.json()),
+                        fetch('/get_user_alpha/').then(response => response.json()),
+                        fetch('/get_user_izin/').then(response => response.json())
+                    ])
+                    .then(responses => {
+                        responses.forEach(events => {
+                            allEvents.push(...events);
+                        });
+                        successCallback(allEvents);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching events:', error);
+                        failureCallback(error);
+                    });
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+
+    <script>
+      const navBar = document.querySelector("nav"),
+       menuBtns = document.querySelectorAll(".menu-icon"),
+       overlay = document.querySelector(".overlay");
+
+     menuBtns.forEach((menuBtn) => {
+       menuBtn.addEventListener("click", () => {
+         navBar.classList.toggle("open");
+       });
+     });
+
+     overlay.addEventListener("click", () => {
+       navBar.classList.remove("open");
+     });
+    </script>
+  </body>
+</html>

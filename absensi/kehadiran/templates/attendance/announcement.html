@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f4f7fa;
+            color: #333;
+        }
+
+        nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 70px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: #1e293b;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        z-index: 1;
+      }
+      nav .logo {
+        display: flex;
+        align-items: center;
+        margin: 0 24px;
+      }
+      .logo .menu-icon {
+        color: #fff;
+        font-size: 24px;
+        margin-right: 14px;
+        cursor: pointer;
+      }
+      .logo .logo-name {
+        color: #fff;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      nav .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 260px;
+        padding: 20px 0;
+        background-color: #1e293b;
+        transition: all 0.4s ease;
+        z-index: 2;
+        color: #fff;
+      }
+      nav.open .sidebar {
+        left: 0;
+      }
+      .sidebar .sidebar-content {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 30px 16px;
+      }
+      .sidebar-content .list {
+        list-style: none;
+      }
+      .list .nav-link {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        padding: 14px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #94a3b8;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .lists .nav-link:hover {
+        background-color: #0ea5e9;
+        color: #fff;
+      }
+      .nav-link .icon {
+        margin-right: 14px;
+        font-size: 20px;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 200%;
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+        transition: all 0.4s ease;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      nav.open ~ .overlay {
+        opacity: 1;
+        left: 260px;
+        pointer-events: auto;
+      }
+
+        .container {
+            max-width: 1200px;
+            margin: 7rem auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+        .announcement-card {
+            background-color: #ffffff;
+            border: 1px solid #e1e5eb;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .announcement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .announcement-title {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: #007bff;
+            margin-bottom: 0.75rem;
+        }
+        .announcement-content {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: #495057;
+        }
+        .announcement-date {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #868e96;
+            font-style: italic;
+        }
+        /* Style for pagination */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            padding: 10px 15px;
+            margin: 0 5px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #007bff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .pagination a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .pagination .current {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .announcement-card {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .announcement-title {
+                font-size: 1.5rem;
+            }
+            .announcement-content {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav>
+      <div class="logo">
+        <i class="bx bx-menu menu-icon"></i>
+        <span class="logo-name">Akd-Tech</span>
+      </div>
+      <div class="sidebar">
+        <div class="logo">
+          <i class="bx bx-menu menu-icon"></i>
+          <span class="logo-name">Akd-Tech</span>
+        </div>
+        <div class="sidebar-content">
+          <ul class="lists">
+            <li class="list">
+              <a href="{% url 'user:karyawan_home' %}" class="nav-link">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="link">Dashboard</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'kehadiran:check_in' %}" class="nav-link">
+                <i class="bx bx-calendar-check icon"></i>
+                <span class="link">Attendance</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'kehadiran:announcement_karyawan' %}" class="nav-link">
+                <i class="bx bx-bell icon"></i>
+                <span class="link">Announcement</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'kehadiran:attendance_summary' %}" class="nav-link">
+                <i class="bx bx-history icon"></i>
+                <span class="link">History Summary</span>
+              </a>
+            </li>
+          </ul>
+          <div class="bottom-content">
+            <li class="list">
+              <a href="{% url 'user:karyawan_profile' %}" class="nav-link">
+                <i class="bx bx-user-circle icon"></i>
+                <span class="link">Profile</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'user:logout' %}" class="nav-link">
+                <i class="bx bx-log-out icon"></i>
+                <span class="link">Logout</span>
+              </a>
+            </li>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="overlay"></section>
+    <div class="container">
+    <div class="container">
+        <h1>Latest Announcements</h1>
+        {% for announcement in announcements %}
+        <div class="announcement-card">
+            <div class="announcement-title">{{ announcement.title }}</div>
+            <div class="announcement-content">{{ announcement.content }}</div>
+            <div class="announcement-date">Published on {{ announcement.created_at|date:"F j, Y" }}</div>
+        </div>
+        {% empty %}
+        <p>No announcements at this time.</p>
+        {% endfor %}
+
+        <!-- Pagination links -->
+        <div class="pagination">
+            {% if announcements.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ announcements.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">Page {{ announcements.number }} of {{ announcements.paginator.num_pages }}</span>
+
+            {% if announcements.has_next %}
+                <a href="?page={{ announcements.next_page_number }}">Next</a>
+                <a href="?page={{ announcements.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+      const navBar = document.querySelector("nav"),
+       menuBtns = document.querySelectorAll(".menu-icon"),
+       overlay = document.querySelector(".overlay");
+
+     menuBtns.forEach((menuBtn) => {
+       menuBtn.addEventListener("click", () => {
+         navBar.classList.toggle("open");
+       });
+     });
+
+     overlay.addEventListener("click", () => {
+       navBar.classList.remove("open");
+     });
+    </script>
+</body>
+</html>

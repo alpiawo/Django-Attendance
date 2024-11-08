@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        min-height: 100vh;
+        background: #f3f4f6;
+      }
+
+      @media (max-width: 600px) {
+         body
+         {
+           margin: 2rem;
+         }
+       }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 70px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: #1e293b;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        z-index: 1;
+      }
+      nav .logo {
+        display: flex;
+        align-items: center;
+        margin: 0 24px;
+      }
+      .logo .menu-icon {
+        color: #fff;
+        font-size: 24px;
+        margin-right: 14px;
+        cursor: pointer;
+      }
+      .logo .logo-name {
+        color: #fff;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      nav .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 260px;
+        padding: 20px 0;
+        background-color: #1e293b;
+        transition: all 0.4s ease;
+        z-index: 2;
+        color: #fff;
+      }
+      nav.open .sidebar {
+        left: 0;
+      }
+      .sidebar .sidebar-content {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 30px 16px;
+      }
+      .sidebar-content .list {
+        list-style: none;
+      }
+      .list .nav-link {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        padding: 14px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #94a3b8;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .lists .nav-link:hover {
+        background-color: #0ea5e9;
+        color: #fff;
+      }
+      .nav-link .icon {
+        margin-right: 14px;
+        font-size: 20px;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 200%;
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+        transition: all 0.4s ease;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      nav.open ~ .overlay {
+        opacity: 1;
+        left: 260px;
+        pointer-events: auto;
+      }
+
+      .container {
+        margin: 3rem;
+      }
+
+      .top-item {
+          margin-top: 7rem;
+          display: block;
+          justify-content: center;
+      }
+
+      .export-btn {
+          margin: 2rem;
+          padding-inline: 1rem;
+          padding-block: 0.5rem;
+          background-color: #0ea5e9;
+          border-radius: 4px;
+          text-decoration: none;
+          color: white;
+          transition: 0.2s;
+          border: none;
+          cursor: pointer;
+      }
+
+      .export-btn:hover {
+          box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+          background-color: #4070f4;
+      }
+
+      @media (max-width: 600px) {
+          .export-btn {
+
+          }
+      }
+
+      .card-grid {
+          margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .card {
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Efek naik saat hover */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Lebih besar shadow saat hover */
+        }
+
+        .card h5 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .card p {
+            margin: 0.5rem 0;
+            color: #7f8c8d;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .search-form {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .search-input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-button {
+            padding: 0.5rem;
+            background-color: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .search-button:hover {
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            background-color: #4070f4;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+      <div class="logo">
+        <i class="bx bx-menu menu-icon"></i>
+        <span class="logo-name">Akd-Tech</span>
+      </div>
+      <div class="sidebar">
+        <div class="logo">
+          <i class="bx bx-menu menu-icon"></i>
+          <span class="logo-name">Akd-Tech</span>
+        </div>
+        <div class="sidebar-content">
+          <ul class="lists">
+            <li class="list">
+              <a href="{% url 'user:admin_home' %}" class="nav-link">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="link">Dashboard</span>
+              </a>
+            </li>
+              <li class="list">
+              <a href="{% url 'user:admin_attendance_check' %}" class="nav-link">
+                <i class="bx bx-list-check icon"></i>
+                <span class="link">Check Attendance</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'user:announcement_view' %}" class="nav-link">
+                <i class="bx bx-bell icon"></i>
+                <span class="link">Announcement</span>
+              </a>
+            </li>
+          </ul>
+          <div class="bottom-content">
+            <li class="list">
+              <a href="{% url 'user:admin_profile' %}" class="nav-link">
+                <i class="bx bx-user-circle icon"></i>
+                <span class="link">Profile</span>
+              </a>
+            </li>
+            <li class="list">
+              <a href="{% url 'user:logout' %}" class="nav-link">
+                <i class="bx bx-log-out icon"></i>
+                <span class="link">Logout</span>
+              </a>
+            </li>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="overlay"></section>
+    <div class="container">
+        <div class="top-item">
+            <a href="{% url 'kehadiran:export' %}" class="export-btn">Export</a>
+                <form class="search-form" method="GET">
+                    <input type="text" name="q" class="search-input" placeholder="Search by username">
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+                    <div class="card-grid">
+                        {% for attendance in attendances %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ attendance.user.username }}</h5>
+                                    <p class="card-text">Date: {{ attendance.date }}</p>
+                                    <p class="card-text">Check In: {{ attendance.check_in_time }}</p>
+                                    <p class="card-text">Check Out: {{ attendance.check_out_time }}</p>
+                                    <p class="card-text">Status: {{ attendance.status }}</p>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p style="color: #f44336">No attendance records found.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script>
+        const navBar = document.querySelector("nav"),
+        menuBtns = document.querySelectorAll(".menu-icon"),
+        overlay = document.querySelector(".overlay");
+
+      menuBtns.forEach((menuBtn) => {
+        menuBtn.addEventListener("click", () => {
+          navBar.classList.toggle("open");
+        });
+      });
+
+      overlay.addEventListener("click", () => {
+        navBar.classList.remove("open");
+      });
+    </script>
+</body>
+</html>
