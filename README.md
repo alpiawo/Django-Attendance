@@ -48,7 +48,7 @@ cd <repository-directory>
 
    Update Django settings in `settings.py`:
 
-   -Set up MySQL database connection:
+   - Set up MySQL database connection:
      ```python
        DATABASES = {
       'default': {
@@ -58,8 +58,8 @@ cd <repository-directory>
           'PASSWORD': 'password',
           'HOST': 'localhost',
           'PORT': '3306',
-      }
-    }
+         }
+       }
      ```
 
    - Configure email settings for OTP:
